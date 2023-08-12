@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     exception e;
 
     XCTOR(e);
-    if(!e.try){
+    if(!e.try_){
         // catch block
         printf("APG CATCH BLOCK\n");
         if(vpMem){

@@ -1132,7 +1132,7 @@ abool bUtilAstToXml(void* vpAst, char* cpType, const char* cpFileName){
     char* cpRoot = "_root_";
     exception e;
     XCTOR(e);
-    if(e.try){
+    if(e.try_){
         vpMem = vpMemCtor(&e);
         if(cpFileName){
             spOut = fopen(cpFileName, "wb");

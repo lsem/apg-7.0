@@ -13,6 +13,7 @@ add_library(apg::api ALIAS api)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/../library DIR_LIBRARY)
 add_library(library STATIC ${DIR_LIBRARY})
 add_library(apg::library ALIAS library)
+target_include_directories(library PUBLIC ../library)
 
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/../utilities DIR_UTILITIES)
 add_library(utilities STATIC ${DIR_UTILITIES})

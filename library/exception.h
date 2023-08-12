@@ -30,6 +30,8 @@
 #ifndef EXCEPTION_H_
 #define EXCEPTION_H_
 
+#include <setjmp.h>
+
 /** \file library/exception.h
  * \brief Structures and macros for exception handling.
  */
@@ -46,7 +48,7 @@
  */
 typedef struct{
     const void* vpValidate; ///< \brief Used by the memory object to validate the exception structure.
-    abool try; ///< \brief True for the try block, false for the catch block.
+    abool try_; ///< \brief True for the try block, false for the catch block.
     jmp_buf aJmpBuf; ///< \brief A "long jump" context array. Long jumps to "catch" area on thrown exception.
     unsigned int uiLine; ///< \brief The source code line number where the error occurred. "__LINE__"
     char caMsg[256]; ///< \brief A the caller's error message.
@@ -77,9 +79,9 @@ typedef struct{
 #define XCTOR(e) \
     vExCtor(&e);\
     if(setjmp(e.aJmpBuf) == 0){ \
-        e.try = APG_TRUE; \
+        e.try_ = APG_TRUE; \
     }else{ \
-        e.try = APG_FALSE; \
+        e.try_ = APG_FALSE; \
     }
 
 void vExCtor(exception* spException);

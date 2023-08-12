@@ -30,6 +30,13 @@
 #ifndef LIB_PARSER_H_
 #define LIB_PARSER_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "apg.h"
+#include "exception.h"
+
 /** \file parser.h
  * \brief The SABNF parser's public header file.
  *
@@ -222,5 +229,9 @@ const char* cpParserRuleName(void* vpCtx, aint uiRuleIndex);
 const char* cpParserUdtName(void* vpCtx, aint uiUdtIndex);
 void vParserSetRuleCallback(void* vpCtx, aint uiRuleId, parser_callback pfnCallback);
 void vParserSetUdtCallback(void* vpCtx, aint uiUdtId, parser_callback pfnCallback);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* LIB_PARSER_H_ */
