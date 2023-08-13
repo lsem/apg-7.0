@@ -43,6 +43,11 @@
 #include "../library/lib.h"
 #include "./objects.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /** @name System Information */
 ///@{
 void vUtilApgInfo(void);
@@ -145,4 +150,9 @@ void vUtilConvertLineEnds(exception* spEx, const char *cpString, const char *cpE
  * and reusable means of doing this throughout APG and any other application that has a need for it.
  *
  */
+#ifdef __cplusplus
+}
+#endif
+
+
 #endif /* UTILS_UTILS_H_ */

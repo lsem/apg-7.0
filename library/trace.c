@@ -34,10 +34,14 @@
 
 
 #include "./apg.h"
+
 #ifdef APG_TRACE
+
 #include "../utilities/utilities.h"
 #include "./parserp.h"
 #include "./tracep.h"
+
+
 
 static void vUp(trace* spCtx, const opcode* spOp, aint uiState, aint uiOffset, aint uiPhraseLength);
 static void vDown(trace* spCtx, const opcode* spOp, aint uiOffset);
@@ -416,5 +420,7 @@ static abool bTraceConfigCheck(trace* spCtx, const opcode* spOp) {
     }
     return bReturn;
 }
+
+
 
 #endif /* APG_TRACE */

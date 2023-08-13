@@ -35,6 +35,11 @@
 
 #ifdef APG_TRACE
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 /** \def TRACE_ASCII
  * \brief Identifier for plain ASCII trace record format.
  */
@@ -57,6 +62,11 @@ void vTraceConfigDisplay(void* vpCtx, const char* cpFileName);
 void vTraceConfigGen(void* vpCtx, const char* cpFileName);
 aint uiTraceGetRecordCount(void* vpCtx);
 ///@}
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* LIB_TRACE_H_ */
 #endif /* APG_TRACE */

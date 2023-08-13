@@ -44,6 +44,11 @@
 
 #define BUF_SIZE 512
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 static char* s_cpTrue = "true";
 static char* s_cpFalse = "false";
 
@@ -576,5 +581,10 @@ static aint* uipUintValue(char* cpValue, aint* uipResult){
     *uipResult = (aint)iLong;
     return uipResult;
 }
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* APG_TRACE */
