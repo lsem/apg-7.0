@@ -36,6 +36,7 @@
 #include "./api.h"
 #include "./apip.h"
 #include "../library/parserp.h"
+#include "../library/ast.h"
 #include "./semantics.h"
 #include "sabnf-grammar.h"
 

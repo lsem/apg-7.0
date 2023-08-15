@@ -34,6 +34,14 @@
 
 #ifdef APG_AST
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+#include "apg.h"
+#include "exception.h"
+
 /** \struct ast_record
  * \brief Format of an AST record.
  *
@@ -98,6 +106,11 @@ void vAstSetRuleCallback(void* vpCtx, aint uiRuleIndex, ast_callback pfnCallback
 void vAstSetUdtCallback(void* vpCtx, aint uiUdtIndex, ast_callback pfnCallback);
 void vAstClear(void* vpCtx);
 abool bAstValidate(void* vpCtx);
+
+#ifdef __cplusplus
+}
+#endif
+
 
 #endif /* APG_AST */
 #endif /* LIB_AST_H_ */
