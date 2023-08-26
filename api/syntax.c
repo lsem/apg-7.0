@@ -68,6 +68,7 @@ void vApiSyntax(void* vpCtx, abool bStrict) {
     }
 
     // construct the parser
+    printf("parsing starting vpSabnfGrammarInit\n");
     spApi->vpParser = vpParserCtor(spApi->spException, vpSabnfGrammarInit);
 
     // construct the AST

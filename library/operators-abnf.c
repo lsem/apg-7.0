@@ -160,7 +160,27 @@ void vRep(parser* spCtx, const opcode* spOp) {
     BKRP_OP_OPEN(spCtx->vpBkrp);
     PPPT_OPEN(spCtx, spOp, spCtx->uiOffset);
     spCtx->uiOpState = ID_ACTIVE;
+    printf("rep works...: vpBkru: 0x%x, vpBkrp: 0x%x, start op: %d, min: %d, max: %d\n", spCtx->vpBkru, spCtx->vpBkrp,  spCtx->sStartOp, spOp->sRep.uiMin, spOp->sRep.uiMax);
+
+    if (spCtx->vpBkru) {
+        opcode* casted_op = (opcode*)spOp;
+
+        if (casted_op->sRep.uiMin != -1 || casted_op->sRep.uiMax != -1) {
+            printf("not needed, min: %d, max: %d\n", casted_op->sRep.uiMin, casted_op->sRep.uiMax);
+            //abort();
+        } else {
+            printf("patching min mac with back reference");
+            
+            casted_op->sRep.uiMin = 4;
+            casted_op->sRep.uiMax = 4;
+            abort();
+
+        }
+        
+    }
+
     while (APG_TRUE) {
+        //printf(".");
         // setup
         AST_OP_OPEN(spCtx->vpAst, spCtx->uiInLookaround);
         BKRU_OP_OPEN(spCtx->vpBkru);
@@ -180,8 +200,12 @@ void vRep(parser* spCtx, const opcode* spOp) {
             break;
         }
         if (spCtx->uiOpState == ID_NOMATCH) {
+            printf("no match: %d\n", uiMatchCount);
+            //abort();
             // no match, see if match count is in range
             if (uiMatchCount >= spOp->sRep.uiMin && uiMatchCount <= spOp->sRep.uiMax) {
+                printf("no match: in range\n");
+                //abort();
                 // in range
                 spCtx->uiOpState = ID_MATCH;
                 spCtx->uiOffset = uiOffset + uiPhraseLength;
@@ -195,18 +219,26 @@ void vRep(parser* spCtx, const opcode* spOp) {
             // all done with repetitions
             break;
         } else {
-            // matched phrase, increment the match count and check if done
+            // matched phrase, increment the match count and check if done            
             uiMatchCount += 1;
+            printf("matched %d!\n", uiMatchCount);
             uiPhraseLength += spCtx->uiPhraseLength;
             if (uiMatchCount >= spOp->sRep.uiMax) {
                 // reached max allowed matches, all done
+                printf("all done!\n");
                 spCtx->uiOpState = ID_MATCH;
                 spCtx->uiOffset = uiOffset + uiPhraseLength;
                 spCtx->uiPhraseLength = uiPhraseLength;
+                char buff[100] = {0};
+                strncpy(&buff, spCtx->acpInputString, spCtx->uiInputStringLength);
+                printf("matched in '%s', offset: %d, length: %d", &buff[0], spCtx->uiOffset, spCtx->uiPhraseLength);
+               //abort();
+
                 break;
             } // else repeat
         }
     }
+    printf("\ndone with rep..\n");
     PPPT_CLOSE;
     BKRU_OP_CLOSE(spCtx->vpBkru, spCtx->uiOpState);
     BKRP_OP_CLOSE(spCtx->vpBkrp, spCtx->uiOpState);

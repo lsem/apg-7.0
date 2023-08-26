@@ -49,6 +49,7 @@ static void vSemPushError(semantic_data* spData, aint uiCharIndex, const char* c
 }
 
 static aint uiRuleLookup(ast_data* spAstData){
+    printf("uiRuleName!\n");
     semantic_data* spData = (semantic_data*)spAstData->vpUserData;
     if(spAstData->uiState == ID_AST_PRE){
         spData->uiIncAlt = APG_FALSE;
@@ -117,6 +118,7 @@ static aint uiRuleLookup(ast_data* spAstData){
 }
 
 static aint uiRuleName(ast_data* spAstData){
+    printf("uiRuleName!\n");
     semantic_data* spData = (semantic_data*)spAstData->vpUserData;
     if(spAstData->uiState == ID_AST_PRE){
         spData->cpName = &spData->spApi->cpInput[spAstData->uiPhraseOffset];
@@ -126,6 +128,7 @@ static aint uiRuleName(ast_data* spAstData){
 }
 
 static aint uiIncAlt(ast_data* spAstData){
+    printf("uiIncAlt!\n");
     semantic_data* spData = (semantic_data*)spAstData->vpUserData;
     if(spAstData->uiState == ID_AST_PRE){
         spData->uiIncAlt = APG_TRUE;
@@ -134,6 +137,7 @@ static aint uiIncAlt(ast_data* spAstData){
 }
 
 static aint uiAlternation(ast_data* spAstData){
+    printf("uiAlternation!\n");
     semantic_data* spData = (semantic_data*)spAstData->vpUserData;
     semantic_rule* spRule = spData->spCurrentRule;
     if(spAstData->uiState == ID_AST_PRE){
@@ -298,6 +302,7 @@ static aint uiRepMin(ast_data* spAstData){
 }
 
 static aint uiRepMax(ast_data* spAstData){
+    printf("uiRepMax!\n");
     if(spAstData->uiState == ID_AST_PRE){
         semantic_data* spData = (semantic_data*)spAstData->vpUserData;
         semantic_rule* spRule = spData->spCurrentRule;
@@ -325,6 +330,15 @@ static aint uiRepMax(ast_data* spAstData){
             vSemPushError(spData, spAstData->uiPhraseOffset, caBuf);
         }
     }
+    return ID_AST_OK;
+}
+
+
+static aint uiRepBackRef(ast_data* spAstData){
+    if(spAstData->uiState == ID_AST_PRE){
+        printf("uiRepBackRef!\n");
+    }
+
     return ID_AST_OK;
 }
 
@@ -738,7 +752,7 @@ static aint uiDmax(ast_data* spAstData){
 /** \brief Set the callback functions for the AST translation of the semantic phase parse to opcodes
  * \param vpAstCtx Pointer to an AST context.
  */
-void vSabnfGrammarAstCallbacks(void* vpAstCtx) {
+void vSabnfGrammarAstCallbacks(void* vpAstCtx) {    
     aint ui;
     ast_callback cb[RULE_COUNT_SABNF_GRAMMAR];
     cb[SABNF_GRAMMAR_ABGOP] = uiAbgOp;
@@ -804,6 +818,7 @@ void vSabnfGrammarAstCallbacks(void* vpAstCtx) {
     cb[SABNF_GRAMMAR_PROSVALSTRING] = NULL;
     cb[SABNF_GRAMMAR_REP_MAX] = uiRepMax;
     cb[SABNF_GRAMMAR_REP_MIN] = uiRepMin;
+    cb[SABNF_GRAMMAR_REP_BACK_REF] = uiRepBackRef;
     cb[SABNF_GRAMMAR_REP_MIN_MAX] = uiRepMinMax;
     cb[SABNF_GRAMMAR_REP_NUM] = NULL;
     cb[SABNF_GRAMMAR_REPETITION] = uiRepetition;

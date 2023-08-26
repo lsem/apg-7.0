@@ -111,6 +111,8 @@ RepOp           = (rep-min %d42 rep-max)
                 / (%d42 rep-max)
                 / %d42
                 / rep-min-max
+                / rep-back-ref ; works as minmax but exact number is evaluated from backreference
+rep-back-ref    = ( '(' BkrOp ')' ) ; added by lsem, attempt to allow to specify repetion like [\number]CHAR
 AltOp           = %d47 owsp
 CatOp           = wsp
 AndOp           = %d38

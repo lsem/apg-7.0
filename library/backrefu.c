@@ -141,15 +141,19 @@ void* vpBkruCtor(parser* spParserCtx) {
 
         // count the number of back universal-mode referenced rules and UDTs
         spCtx->uiBkrCount = 0;
+        printf("going thtough all rules and check which are Back Referecnces\n");
         for (ui = 0; ui < spParserCtx->uiOpcodeCount; ui += 1) {
             if (spParserCtx->spOpcodes[ui].sGen.uiId == ID_BKR) {
                 if (spParserCtx->spOpcodes[ui].sBkr.uiMode == ID_BKR_MODE_U) {
                     uiIndex = spParserCtx->spOpcodes[ui].sBkr.uiRuleIndex;
+                    printf("Found back reference, rule index: %d!\n", uiIndex); // IMAP_PARSER_APG_IMPL_NUMBER == 121
                     if (uipCounters[uiIndex] == 0) {
                         if (uiIndex < spParserCtx->uiRuleCount) {
-                            spCtx->spRules[uiIndex].uiIsBackRef = APG_TRUE;
+                            printf("putting isBackRef flag on spRules[uiIndex] %d\n", spCtx->uiBkrCount);
+                            spCtx->spRules[uiIndex].uiIsBackRef = APG_TRUE; 
                             spCtx->spRules[uiIndex].uiBackRefIndex = spCtx->uiBkrCount;
                         } else {
+                            printf("putting isBackRef flag on spRules[uiIndex] %d (UDT)\n", spCtx->uiBkrCount);
                             spCtx->spUdts[uiIndex - spParserCtx->uiRuleCount].uiIsBackRef = APG_TRUE;
                             spCtx->spUdts[uiIndex - spParserCtx->uiRuleCount].uiBackRefIndex = spCtx->uiBkrCount;
                         }
@@ -157,6 +161,8 @@ void* vpBkruCtor(parser* spParserCtx) {
                     }
                     uipCounters[uiIndex] += 1;
                 }
+            } else {
+                //printf("  skip\n");
             }
         }
 
@@ -280,6 +286,7 @@ static void vSetPhrase(backref* spCtx, aint uiIndex, aint uiOffset, aint uiLengt
     vpVecPush(spCtx->vppPhraseStacks[uiIndex], (void*) &sPhrase);
 }
 void vBkruRuleOpen(void* vpCtx, aint uiIndex) {
+    printf("vBkruRuleOpen\n");
     backref* spCtx = (backref*) vpCtx;
     aint* uipCheckPoints;
     if (spCtx->spRules[uiIndex].uiHasBackRef || spCtx->spRules[uiIndex].uiIsBackRef) {
@@ -325,6 +332,7 @@ void vBkruUdtClose(void* vpCtx, aint uiIndex, aint uiState, aint uiPhraseOffset,
 }
 
 void vBkruOpOpen(void* vpCtx) {
+    printf("vBkruOpOpen\n");
     backref* spCtx = (backref*) vpCtx;
     aint* uipCheckPoints;
     aint* uipOpen = (aint*) vpVecLast(spCtx->vpOpenRules);
@@ -335,6 +343,7 @@ void vBkruOpOpen(void* vpCtx) {
         uipCheckPoints = (aint*)vpVecPush(spCtx->vpCheckPoints, NULL);
         vSetCheckPoints(spCtx, uipCheckPoints);
     }
+    printf("vBkruOpOpen -- done\n");
 }
 
 void vBkruOpClose(void* vpCtx, aint uiState) {

@@ -48,7 +48,7 @@
 static aint uiIMatch(parser* spCtx, aint uiOffset, aint uiPhraseOffset, aint uiPhraseLength);
 static aint uiSMatch(parser* spCtx, aint uiOffset, aint uiPhraseOffset, aint uiPhraseLength);
 
-void vBkr(parser* spCtx, const opcode* spOp) {
+    void vBkr(parser* spCtx, const opcode* spOp) {
     spCtx->sState.uiHitCount++;
     spCtx->uiTreeDepth++;
     if(spCtx->uiTreeDepth > spCtx->sState.uiMaxTreeDepth){
