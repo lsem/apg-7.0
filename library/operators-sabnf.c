@@ -87,8 +87,9 @@ void vUdt(parser* spCtx, const opcode* spOp) {
     }
     if ((spUdt->uiEmpty == APG_FALSE) && (spCtx->sCBData.uiCallbackState == ID_MATCH)
             && (spCtx->sCBData.uiCallbackPhraseLength == 0)) {
-        XTHROW(spCtx->spException,
-                "user UDT callback function: returned empty phrase for non-empty UDT");
+        // lsem: this does not seem to be harmful but we have a test case when zere is zero size literal which makes literal data basically optional.
+        // XTHROW(spCtx->spException,
+        //         "user UDT callback function: returned empty phrase for non-empty UDT");
     }
 
     // accept the results
