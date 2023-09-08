@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 11)
 project(APG70)
 
 
-set(COMMON_DEFS APG_TRACE APG_AST APG_DEBUG)
+set(COMMON_DEFS  APG_AST )
 
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/../api DIR_API)
 add_library(api STATIC ${DIR_API})
